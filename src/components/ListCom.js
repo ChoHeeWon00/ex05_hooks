@@ -1,6 +1,15 @@
-function ListCom( { data } ) {
+import { useContext } from "react";
+import { TestContext } from "../store/TestContext";
+
+function ListCom( { data ,loading , error } ) {
+
+  const { num } = useContext(TestContext)
   return (<>
-    {data && data.map( d=>
+    <h3>num : {num}</h3>
+    { loading ?<h3>Loading . . . </h3> : 
+    error ? <h3>{ error }</h3> :
+    
+    data && data.map( d=>
       <div key={d.id}>
         <span>{d.id}</span><br/>
         <span>{d.name}</span><br/>

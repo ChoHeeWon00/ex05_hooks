@@ -8,12 +8,21 @@ function ListCon() {
   //const [data, setData] = useState();
   useEffect( ()=> {
     //setData( 서버 데이터 저장 )
-    const data = getList();
-    dispatch({type:"LIST", data})
+    try{
+      dispatch( {type:"LOADING"} )
+      setTimeout( ()=> {
+        const data = getList();
+        dispatch( {type:"FINISHED"} )
+        dispatch({type:"LIST", data})
+      }, 2 )
+      //throw new Error("Failed to fetch data")
+    }catch(e){
+      dispatch( {type:"ERROR", error : e.toString() } )
+    }
   }, [] )
   console.log("state : ", state)
     return (<>
-      <ListCom data = {state.data} />
+      <ListCom data = {state.data} loading={state.loading} error={state.error} />
       </>);
   }
   export default ListCon;
